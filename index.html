@@ -106,13 +106,26 @@
                 });
             }
 
+            function notlikeStar(name) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/notlike',
+                    data: {name_give:name},
+                    success: function (response) {
+                        alert(response['msg']);
+                        document.location.reload();
+                    }
+                });
+            }
+
             function deleteStar(name) {
                 $.ajax({
                     type: 'POST',
                     url: '/api/delete',
-                    data: {name_give:'샘플데이터'},
+                    data: {name_give:name},
                     success: function (response) {
                         alert(response['msg']);
+                        window.location.reload();
                     }
                 });
             }

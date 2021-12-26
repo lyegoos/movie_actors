@@ -33,12 +33,25 @@ def like_star():
 
     return jsonify({'msg': '+1 했습니다'})
 
+@app.route('/api/notlike', methods=['POST'])
+def notlike_star():
+    name_receive = request.form['name_give']
+
+    target_actor = db.mystar.find_one({'name': name_receive})
+    current_like = target_actor['like']
+    new_like = current_like - 1
+
+    db.mystar.update_one({'name':name_receive}, {'$set': {'like': new_like}})
+
+    return jsonify({'msg': '-1 했습니다'})
 
 @app.route('/api/delete', methods=['POST'])
 def delete_star():
-    sample_receive = request.form['sample_give']
-    print(sample_receive)
-    return jsonify({'msg': 'delete connected!'})
+    name_receive = request.form['name_give']
+
+    db.mystar.delete_one({'name': name_receive})
+
+    return jsonify({'msg': '삭제되었습니다!'})
 
 
 if __name__ == '__main__':
